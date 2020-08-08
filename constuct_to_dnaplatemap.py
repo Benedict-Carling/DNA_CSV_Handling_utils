@@ -1,26 +1,25 @@
 import pandas
 
 read = pandas.read_csv(filepath_or_buffer='basic_parts_linkers.csv')
-#print('data frame head\n')
-#print(read.head())
-#print('data frame index\n')
-#print(read.index)
-#print('data frame columns\n')
-#print(read.columns)
-print('data frame values\n')
-print(read.values)
-
-#for input in read.values:
-#    print(input)
-print('data frame values 1\n')
-print(read.values[0])
-
-def process(column):
-    return [column[0],location[0],location[1:]]
-
-process(read.values[0])
+process = lambda column : [column[0],column[1][0],column[1][1:]]
 output = list(map(process,read.values))
-print(output)
+output.sort()
+perfect_format = []
+
+for i in range(len(output)//12+1):
+    row_width = []
+    print(i)
+    for j in range(12):
+        if i*12+j+1 > len(output):
+            break
+        else:
+            print(i*12+j)
+            row_width.append(output[i*12+j][0])
+    perfect_format.append(row_width)
+print(perfect_format)
+df = pandas.DataFrame(perfect_format)
+print(df)
+df.to_csv('output.csv',header=None,index=False)
 
 
 
